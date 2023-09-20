@@ -23,6 +23,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install Dependencies
         run: |
+          sudo mkdir /etc/edc_appointment.ini
+          echo -e "[edc_sms]\nbase_api_url = https://sms.mobilenterprises.com:9443/api?action=sendmessage&username=BHP&password=21K50uShD&\n" >> /etc/edc_appointment.ini
           sudo apt-get update
           sudo apt-get install -y libcups2-dev
           python -m pip install --upgrade pip
