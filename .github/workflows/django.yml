@@ -23,8 +23,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install Dependencies
         run: |
-          sudo mkdir -p /etc/potlako
-          sudo chown -R $USER:$USER /etc/potlako
+          sudo mkdir -p /etc/edc_appointment
+          sudo chown -R $USER:$USER /etc/edc_appointment
           echo -e "[edc_sms]\nbase_api_url = https://sms.mobilenterprises.com:9443/api?action=sendmessage&username=BHP&password=21K50uShD&\n" | sudo tee -a /etc/edc_appointment.ini
           sudo apt-get update
           sudo apt-get install -y libcups2-dev
