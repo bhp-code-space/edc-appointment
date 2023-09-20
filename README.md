@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/botswana-harvard/edc-appointment.svg?branch=develop)](https://travis-ci.org/clinicedc/edc-appointment) [![Coverage Status](https://coveralls.io/repos/clinicedc/edc-appointment/badge.svg?branch=develop&service=github)](https://coveralls.io/github/clinicedc/edc-appointment?branch=develop)
-
-# edc-appointment
+# edc-appointment ![Build Status](https://github.com/bhp-code-space/edc-appointment/actions/workflows/django.yml/badge.svg) [![Coverage Status](https://codecov.io/gh/bhp-code-space/edc-appointment/branch/develop/graph/badge.svg?token=04d2458b-c222-4a84-a481-8010e8377b9b)](https://codecov.io/gh/bhp-code-space/edc-data-manager)
 
 This module works closely with `edc_visit_tracking` and `edc_visit_schedule`.
 

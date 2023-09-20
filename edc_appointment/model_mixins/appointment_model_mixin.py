@@ -1,4 +1,5 @@
 from django.apps import apps as django_apps
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_timepoint.model_mixins import TimepointModelMixin
@@ -14,7 +15,6 @@ from ..managers import AppointmentManager
 class AppointmentModelMixin(NonUniqueSubjectIdentifierFieldMixin,
                             UpdatesOrCreatesCalenderEventModelMixin,
                             TimepointModelMixin, VisitScheduleModelMixin):
-
     """Mixin for the appointment model only.
 
     Only one appointment per subject visit+visit_code_sequence.

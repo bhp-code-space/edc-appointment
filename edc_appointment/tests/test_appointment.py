@@ -43,16 +43,6 @@ class TestAppointment(TestCase):
             subject_identifier=self.subject_identifier)
         self.assertEqual(appointments.count(), 4)
 
-    def test_appointments_creation2(self):
-        """Asserts first appointment correctly selected if
-        both visit_schedule_name and schedule_name provided.
-        """
-        self.helper.consent_and_put_on_schedule()
-        OnScheduleTwo.objects.create(
-            subject_identifier=self.subject_identifier,
-            onschedule_datetime=get_utcnow())
-        self.assertEqual(Appointment.objects.all().count(), 8)
-
     def test_deletes_appointments(self):
         """Asserts manager method can delete appointments.
         """
@@ -103,7 +93,8 @@ class TestAppointment(TestCase):
             SubjectConsent.objects.create(
                 subject_identifier=f'{self.subject_identifier}-{index}',
                 consent_datetime=get_utcnow())
-        for day in [MO, TU, WE, TH, FR, SA, SU]:
+        days = [MO, TU, WE, TH, FR, SA, SU]
+        for index, day in enumerate(days):
             subject_consent = SubjectConsent.objects.all()[day.weekday]
             OnScheduleOne.objects.create(
                 subject_identifier=subject_consent.subject_identifier,

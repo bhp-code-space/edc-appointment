@@ -1,9 +1,9 @@
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
+from .appointment_creator import AppointmentCreator
 from ..constants import CANCELLED_APPT, IN_PROGRESS_APPT
 from ..constants import COMPLETE_APPT, INCOMPLETE_APPT, NEW_APPT
-from .appointment_creator import AppointmentCreator
 
 
 class UnscheduledAppointmentError(Exception):
@@ -27,7 +27,6 @@ class AppointmentInProgressError(Exception):
 
 
 class UnscheduledAppointmentCreator:
-
     appointment_creator_cls = AppointmentCreator
 
     def __init__(self, subject_identifier=None,
@@ -83,14 +82,17 @@ class UnscheduledAppointmentCreator:
                     raise UnscheduledAppointmentError(
                         f'Not allowed. Visit {next_by_timepoint.visit_code} has '
                         'already been started.')
+            if not suggested_datetime:
+                suggested_datetime = self.parent_appointment.appt_datetime
+
+            if not timepoint_datetime:
+                timepoint_datetime = self.parent_appointment.timepoint_datetime
             appointment_creator = self.appointment_creator_cls(
                 subject_identifier=self.subject_identifier,
                 visit_schedule_name=self.visit_schedule_name,
                 schedule_name=self.schedule_name, visit=visit,
-                suggested_datetime=suggested_datetime or
-                self.parent_appointment.appt_datetime,
-                timepoint_datetime=timepoint_datetime or
-                self.parent_appointment.timepoint_datetime,
+                suggested_datetime=suggested_datetime,
+                timepoint_datetime=timepoint_datetime,
                 visit_code_sequence=self.parent_appointment.next_visit_code_sequence,
                 facility=self.facility,
                 appointment_model=self.appointment_model_cls._meta.label_lower,

@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'edc_identifier.apps.AppConfig',
     'edc_timepoint.apps.AppConfig',
     'edc_registration.apps.AppConfig',
-    'edc_protocol.apps.AppConfig',
     'edc_visit_tracking.apps.AppConfig',
     'edc_visit_schedule.apps.AppConfig',
     'edc_appointment.apps.EdcSmsAppConfig',
     'edc_appointment.apps.EdcFacilityAppConfig',
+    'edc_appointment.apps.EdcProtocolAppConfig',
     'edc_appointment.apps.AppConfig',
 ]
 

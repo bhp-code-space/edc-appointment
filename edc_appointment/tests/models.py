@@ -7,7 +7,6 @@ from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_visit_schedule.model_mixins import OnScheduleModelMixin
 from edc_visit_tracking.model_mixins import VisitModelMixin
 from uuid import uuid4
-from edc_sms.models import SubjectConsentRecipient
 
 from ..models import Appointment
 
@@ -18,7 +17,6 @@ class MyModel(VisitModelMixin, BaseUuidModel):
 
 class SubjectConsent(NonUniqueSubjectIdentifierFieldMixin,
                      UpdatesOrCreatesRegistrationModelMixin,
-                     SubjectConsentRecipient,
                      BaseUuidModel):
 
     consent_datetime = models.DateTimeField(

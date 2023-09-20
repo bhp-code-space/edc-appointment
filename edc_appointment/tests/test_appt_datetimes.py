@@ -1,16 +1,16 @@
-import arrow
-
 from copy import deepcopy
 from datetime import datetime
-from dateutil.relativedelta import relativedelta, SU, MO, TU, WE, TH, FR, SA, weekday
-from django.test import TestCase, tag
+
+import arrow
+from dateutil.relativedelta import FR, MO, relativedelta, SA, SU, TH, TU, WE, weekday
+from django.test import TestCase
 from edc_facility.import_holidays import import_holidays
 from edc_visit_schedule.schedule.visit_collection import VisitCollection
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 
-from ..models import Appointment
 from .helper import Helper
 from .visit_schedule import visit_schedule1
+from ..models import Appointment
 
 
 class TestApptDatetimes(TestCase):
@@ -68,7 +68,7 @@ class TestApptDatetimes(TestCase):
         """
         self.register_visit_schedule(facility_name='7-day-clinic')
         for i in range(0, 7):
-            subject_identifier = f'12345{i}'
+            subject_identifier = '12345{i}'
             dt = datetime(2017, 1, 7 + i)
             now = arrow.Arrow.fromdatetime(dt, tzinfo='UTC').datetime
             self.helper = self.helper_cls(
@@ -90,7 +90,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), SA)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'123456')
+            subject_identifier='123456')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), MO)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), TU)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), WE)
@@ -100,7 +100,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), SU)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'1234567')
+            subject_identifier='1234567')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), MO)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), TU)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), WE)
@@ -110,7 +110,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), MO)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'12345678')
+            subject_identifier='12345678')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), MO)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), TU)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), WE)
@@ -120,7 +120,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), TU)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'123456789')
+            subject_identifier='123456789')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), TU)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), WE)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), TH)
@@ -130,7 +130,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), WE)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'1234567890')
+            subject_identifier='1234567890')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), WE)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), TH)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), FR)
@@ -144,7 +144,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), SA)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'123456')
+            subject_identifier='123456')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), TU)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), WE)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), TH)
@@ -154,7 +154,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), SU)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'1234567')
+            subject_identifier='1234567')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), TU)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), WE)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), TH)
@@ -164,7 +164,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), MO)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'12345678')
+            subject_identifier='12345678')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), TU)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), WE)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), TH)
@@ -174,7 +174,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), TU)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'123456789')
+            subject_identifier='123456789')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), TU)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), WE)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), TH)
@@ -184,7 +184,7 @@ class TestApptDatetimes(TestCase):
         self.assertTrue(weekday(base_appt_datetime.weekday()), WE)
         appt_datetimes = self.get_appt_datetimes(
             base_appt_datetime=base_appt_datetime,
-            subject_identifier=f'1234567890')
+            subject_identifier='1234567890')
         self.assertTrue(weekday(appt_datetimes[0].weekday()), WE)
         self.assertTrue(weekday(appt_datetimes[1].weekday()), TH)
         self.assertTrue(weekday(appt_datetimes[2].weekday()), FR)

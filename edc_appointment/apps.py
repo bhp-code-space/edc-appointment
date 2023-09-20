@@ -1,5 +1,7 @@
 import sys
+from datetime import datetime
 
+from dateutil.tz import gettz
 from django.apps import AppConfig as DjangoAppConfig
 from django.conf import settings
 
@@ -23,7 +25,7 @@ class AppConfig(DjangoAppConfig):
 
     # SMS appointment reminder confs
     send_sms_reminders = False
-    remind_num_days_bfr_app = 1
+    remind_num_days_bfr_app = 2
     appt_reminder_model = 'edc_appointment.appointment'
 
     def ready(self):
@@ -63,6 +65,7 @@ if settings.APP_NAME == 'edc_appointment':
     from dateutil.relativedelta import SU, MO, TU, WE, TH, FR, SA
     from edc_facility.apps import AppConfig as BaseEdcFacilityAppConfig
     from edc_sms.apps import AppConfig as BaseEdcSmsAppConfig
+    from edc_protocol.apps import AppConfig as BaseEdcProtocolAppConfig
 
     class EdcFacilityAppConfig(BaseEdcFacilityAppConfig):
         definitions = {
@@ -78,3 +81,9 @@ if settings.APP_NAME == 'edc_appointment':
         locator_auto_create_contact = True
         locator_model = 'edc_appointment.locator'
         consent_model = 'edc_appointment.subjectconsent'
+
+    class EdcProtocolAppConfig(BaseEdcProtocolAppConfig):
+        study_open_datetime = datetime(
+            2000, 7, 1, 0, 0, 0, tzinfo=gettz('UTC'))
+        study_close_datetime = datetime(
+            2105, 6, 30, 23, 59, 59, tzinfo=gettz('UTC'))

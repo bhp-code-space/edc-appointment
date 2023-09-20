@@ -57,7 +57,7 @@ class TestAppointmentSmsReminder(TestCase):
         appt_datetime = get_utcnow() + timedelta(21)
         reminder_date = AppointmentSmsReminder().reminder_date(
             appt_datetime=appt_datetime)
-        expected_reminder_date = get_utcnow().date() + timedelta(17)
+        expected_reminder_date = get_utcnow().date() + timedelta(19)
         self.assertEqual(reminder_date.date(), expected_reminder_date)
 
     def test_reminder_date_app_date_future2(self):

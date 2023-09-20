@@ -1,7 +1,7 @@
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites import CurrentSiteManager as BaseCurrentSiteManager
-from edc_base.sites import CurrentSiteManager, SiteModelMixin
+from edc_base.sites import SiteModelMixin
 
 from ..managers import AppointmentManager
 from ..model_mixins import AppointmentModelMixin
