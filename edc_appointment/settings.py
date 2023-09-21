@@ -24,7 +24,6 @@ CONFIG_FILE = f'{APP_NAME}.ini'
 CONFIG_PATH = os.path.join(ETC_DIR, APP_NAME, CONFIG_FILE)
 config = configparser.ConfigParser()
 config.read(CONFIG_PATH)
-BASE_API_URL = config['edc_sms']['base_api_url']
 BASE_API_URL = config.get('edc_sms', 'base_api_url') \
     if config.has_section('edc_sms') else ''
 # Application definition
