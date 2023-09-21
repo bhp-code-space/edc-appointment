@@ -20,14 +20,13 @@ ALLOWED_HOSTS = []
 
 ETC_DIR = '/etc/'
 
-
 CONFIG_FILE = f'{APP_NAME}.ini'
 CONFIG_PATH = os.path.join(ETC_DIR, APP_NAME, CONFIG_FILE)
 config = configparser.ConfigParser()
 config.read(CONFIG_PATH)
 BASE_API_URL = config['edc_sms']['base_api_url']
-
-
+BASE_API_URL = config.get('edc_sms', 'base_api_url') \
+    if config.has_section('edc_sms') else ''
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,7 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'edc_appointment.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -100,7 +98,8 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -112,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -126,7 +124,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -142,7 +139,6 @@ DASHBOARD_URL_NAMES = {
 }
 
 if 'test' in sys.argv:
-
     class DisableMigrations:
 
         def __contains__(self, item):
@@ -151,6 +147,7 @@ if 'test' in sys.argv:
         def __getitem__(self, item):
             return None
 
+
     MIGRATION_MODULES = DisableMigrations()
-    PASSWORD_HASHERS = ('django.contrib.auth.hashers.MD5PasswordHasher', )
+    PASSWORD_HASHERS = ('django.contrib.auth.hashers.MD5PasswordHasher',)
     DEFAULT_FILE_STORAGE = 'inmemorystorage.InMemoryStorage'
